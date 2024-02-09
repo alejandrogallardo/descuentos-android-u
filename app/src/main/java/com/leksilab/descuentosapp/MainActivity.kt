@@ -14,14 +14,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.leksilab.descuentosapp.ui.theme.DescuentosAppTheme
 import com.leksilab.descuentosapp.viewmodels.CalcularViewModel1
 import com.leksilab.descuentosapp.viewmodels.CalcularViewModel2
+import com.leksilab.descuentosapp.viewmodels.CalcularViewModel3
 import com.leksilab.descuentosapp.views.HomeView
 import com.leksilab.descuentosapp.views.HomeView2
+import com.leksilab.descuentosapp.views.HomeView3
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //val viewModel: CalcularViewModel1 by viewModels()
-        val viewModel2: CalcularViewModel2 by viewModels()
+        //val viewModel2: CalcularViewModel2 by viewModels()
+        val viewModel3: CalcularViewModel3 by viewModels()
         setContent {
             DescuentosAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -30,7 +33,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //HomeView(viewModel)
-                    HomeView2(viewModel2)
+                    //HomeView2(viewModel2)
+                    HomeView3(viewModel3)
                 }
             }
         }
