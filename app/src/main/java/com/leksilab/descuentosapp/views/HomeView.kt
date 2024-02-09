@@ -11,22 +11,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.leksilab.descuentosapp.components.*
+import com.leksilab.descuentosapp.viewmodels.CalcularViewModel1
 
 @Composable
-fun HomeView() {
+fun HomeView(viewModel1: CalcularViewModel1) {
     Scaffold(topBar = {
         TopAppBar(
             title = { Text(text = "Calcular Descuentos") },
             backgroundColor = MaterialTheme.colors.primary
         )
     }) {
-        HomeViewContent(it)
+        HomeViewContent(it, viewModel1)
     }
 
 }
 
 @Composable
-fun HomeViewContent(paddingValues: PaddingValues) {
+fun HomeViewContent(paddingValues: PaddingValues, viewModel1: CalcularViewModel1) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(paddingValues = paddingValues)
@@ -45,11 +46,11 @@ fun HomeViewContent(paddingValues: PaddingValues) {
         MainTextField(value = descuento, onValueChange = { descuento = it }, label = "Descuento")
         SpaceH(10.dp)
         MainButton(text = "Generar Descuento") {
-            if (precio != "" && descuento != "") {
-                precioDescuento = calcularPrecio(precio.toDouble(), descuento.toDouble())
-                totalDescuento = calcularDescuento(precio.toDouble(), descuento.toDouble())
-            } else {
-                showAlert = true
+            val result = viewModel1.calcular(precio, descuento)
+            showAlert = result.second.second
+            if (!showAlert) {
+                precioDescuento = result.first
+                totalDescuento = result.second.first
             }
         }
         SpaceH()
@@ -69,14 +70,4 @@ fun HomeViewContent(paddingValues: PaddingValues) {
         }
 
     }
-}
-
-fun calcularPrecio(precio: Double, descuento: Double): Double {
-    val res = precio - calcularDescuento(precio, descuento)
-    return kotlin.math.round(res * 100) / 100.0
-}
-
-fun calcularDescuento(precio: Double, descuento: Double): Double {
-    val res = precio * (1 - descuento / 100)
-    return kotlin.math.round(res * 100) / 100.0
 }
